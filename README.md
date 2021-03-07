@@ -18,3 +18,10 @@ The packages required for running STQS:
 
 The exact environment can be created using the following file:<br/>
 ```conda env create -f environment.yml```
+
+**Obtaining Data**
+SHHS data can be downloaded [here](https://sleepdata.org/datasets/shhs)
+
+**Running**
+The steps of running the codes for STQS model is explained in:
+```Instructions for creation of STQS model.ipynb```
