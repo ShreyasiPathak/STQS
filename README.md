@@ -16,5 +16,5 @@ The packages required for running STQS:
 7. matplotlib 3.1.3
 8. cudatoolkit=9.2
 
-The environment can be created using the following file:<br/>
+The exact environment can be created using the following file:<br/>
 ```conda env create -f environment.yml```
