@@ -17,4 +17,4 @@ The packages required for running STQS:
 8. cudatoolkit=9.2
 
 The environment can be created using the following file:
-conda env create -f environment.yml
+```conda env create -f environment.yml```
