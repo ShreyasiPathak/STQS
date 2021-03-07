@@ -8,12 +8,13 @@ STQS, abbreviation for Spatio-Temporal-seQuential-Sleep-scoring, is a deep learn
 
 The packages required for running STQS:
 1. python 3.7.5
-2. h5py
-3. pytorch
+2. h5py 2.9.0
+3. pytorch 1.3.0
 4. pickle
-5. sklearn
-6. numpy
-7. matplotlib
+5. sklearn 
+6. numpy 1.17.3
+7. matplotlib 3.1.3
+8. cudatoolkit=9.2
 
 The environment can be created using the following file:
 conda env create -f environment.yml
