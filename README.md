@@ -27,3 +27,4 @@ SHHS data can be downloaded [here](https://sleepdata.org/datasets/shhs)
 
 The steps of running the codes for STQS model is explained in:<br/>
 ```Instructions for creation of STQS model.ipynb```
+Sample data for running the codes can be found [here](https://www.dropbox.com/sh/160g84gkqh345wk/AADE_Gyyfla6yyCGcyWmjS5sa?dl=0)
