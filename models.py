@@ -167,6 +167,58 @@ class ChannelFeaturesBlock(nn.Module):
         x = x.view(-1, self.num_flat_features(x))
         x=self.layer4(x)
         return x
+        
+class DNN(nn.Module):
+    def __init__(self):
+        super(DNN, self).__init__()
+        in_dimen=time_period_sample*n_channels
+        out_dimen1=10000
+        out_dimen2=5000
+        out_dimen3=1000
+        out_dimen4=5
+        
+        self.linear1=nn.Linear(in_dimen,out_dimen1)
+        self.batchNorm1=nn.BatchNorm1d(out_dimen1)
+        self.relu1=nn.ReLU()
+        
+        self.linear2=nn.Linear(out_dimen1,out_dimen2)
+        self.batchNorm2=nn.BatchNorm1d(out_dimen2)
+        self.relu2=nn.ReLU()
+        
+        self.linear3=nn.Linear(out_dimen2,out_dimen3)
+        self.batchNorm3=nn.BatchNorm1d(out_dimen3)
+        self.relu3=nn.ReLU()
+        
+        self.linear4=nn.Linear(out_dimen3,out_dimen4)
+        
+        self.apply(self.init_weights)
+        
+    def init_weights(self,x):
+        if type(x) == nn.Linear or type(x) == nn.BatchNorm1d:
+            x.weight.data.normal_(0, 0.02) 
+            x.bias.data.fill_(0.01)
+    
+    def forward(self, x):
+        if x.shape[0]==1:
+            x=self.linear1(x)
+            x=self.relu1(x)
+            x=self.linear2(x)
+            x=self.relu2(x)
+            x=self.linear3(x)
+            x=self.relu3(x)
+        else:
+            x=self.linear1(x)
+            x=self.batchNorm1(x)
+            x=self.relu1(x)
+            x=self.linear2(x)
+            x=self.batchNorm2(x)
+            x=self.relu2(x)
+            x=self.linear3(x)
+            x=self.batchNorm3(x)
+            x=self.relu3(x)
+        
+        x=self.linear4(x)
+        return x
     
 class DeepSleepSpatialTemporalNet(nn.Module):
     def __init__(self, mainchannels, lstm_option, rc_option, multiple_gpu):
@@ -223,3 +275,26 @@ class DeepSleepSpatialTemporalNet(nn.Module):
             return out, hidden_state
         else:
             return out
+
+class DeepSleepDNNNet(nn.Module):
+    def __init__(self, mainchannels, lstm_option, rc_option, multiple_gpu):
+        super(DeepSleepDNNNet, self).__init__()
+        self.multiple_gpu=multiple_gpu
+        self.lstm_option=lstm_option
+        self.dnn=DNN()
+    
+    def input_splitter_concat(self,x):
+        print("x",x.shape)
+        input_concat=torch.cat((x[:,:,0,:],x[:,:,1,:],x[:,:,2,:],x[:,:,3,:],x[:,:,4,:].view(-1,1,time_period_sample)),2)
+        print("concat",input_concat.shape)
+        input_concat=torch.squeeze(input_concat,1)
+        print("concat",input_concat.shape)
+        return input_concat
+    
+    def forward(self,x):
+        if self.multiple_gpu==True and self.lstm_option==True:
+            x=x.view(x.shape[0]*x.shape[1],x.shape[2],x.shape[3],x.shape[4])
+        print("In the model:",x.shape[0])
+        x=self.input_splitter_concat(x)
+        x=self.dnn(x)
+        return x
