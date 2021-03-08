@@ -30,7 +30,7 @@ time_period_sample=3750 # 30secs * 125
 mat_files_name_of_data_stored='signals'
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda:0" if use_cuda else "cpu")
-path_to_mat_folder='D:/DEEPSLEEP/codes and results/eeg_annotations_all_channels_filtered_30_0.16/'
+path_to_mat_folder='D:/DEEPSLEEP/test_for_github/datasets/shhs/mat files/'
 
 class my_generator1(Dataset):
     def __init__(self, hdf5_file):

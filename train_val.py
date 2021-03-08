@@ -73,12 +73,18 @@ def load_pretrained_model_for_LSTM(model,path):
     for k, v in state_dict_pretrained.items():
         if k[:7]=='module.':
             if k!='module.linear.weight' and k!='module.linear.bias':
-                name = k[7:] # remove `module.`
-                state_dict_remove_module[name] = v
+                if device=="cuda:0":
+                    state_dict_remove_module[k] = v
+                else:
+                    name = k[7:] # remove `module.`
+                    state_dict_remove_module[name] = v
         else:
             if k!='linear.weight' and k!='linear.bias':
-                name = 'module.' + k # remove `module.`
-                state_dict_remove_module[k] = v
+                if device=="cuda:0":
+                    name = 'module.' + k
+                    state_dict_remove_module[name] = v
+                else:
+                    state_dict_remove_module[k] = v
     state_dict_new_model.update(state_dict_remove_module)
     model.load_state_dict(state_dict_new_model)
     return model
@@ -356,9 +362,12 @@ if __name__ == '__main__':
     ###############    val end   ################# 
     
     #Weight of class instances for weighted cost function
-    if class_imbalance=='weightedcostfunc':
-        dic_train_instances=utils.class_distribution(path_to_hdf5_file_train)
-        dic_val_instances=utils.class_distribution(path_to_hdf5_file_val)
+    if class_imbalance=='weightedcostfunc1':
+        dic_train_instances=utils.class_distribution_weightedloss1(path_to_hdf5_file_train)
+        dic_val_instances=utils.class_distribution_weightedloss1(path_to_hdf5_file_val)
+    elif class_imbalance=='weightedcostfunc2':
+        dic_train_instances=utils.class_distribution_weightedloss2(path_to_hdf5_file_train)
+        dic_val_instances=utils.class_distribution_weightedloss2(path_to_hdf5_file_val)
     
     # set file path
     if os.path.isfile(path_to_results):
