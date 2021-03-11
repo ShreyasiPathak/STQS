@@ -28,7 +28,7 @@ SHHS data can be downloaded [here](https://sleepdata.org/datasets/shhs)
 
 The steps of running the codes for STQS model is explained in:<br/>
 
-```Instructions for creation of STQS model.ipynb```<br/>
+[Instructions for creation of STQS model.ipynb](Instructions for creation of STQS model.ipynb)
 
 Sample data for running the codes can be found [here](https://www.dropbox.com/sh/160g84gkqh345wk/AADE_Gyyfla6yyCGcyWmjS5sa?dl=0). This folder contains sample input data files for a few .edf signals and some fake saved models (trained for only one epoch). This is shown just for the purpose of giving an idea of how the sample inputs and saved models look.<br\>
 
