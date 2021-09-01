@@ -37,7 +37,7 @@ Sample data for running the codes can be found [here](https://www.dropbox.com/sh
 All original STQS trained models (on SHHS) can be found in 'trained_models' folder. These models can be used using the test.py code to test it on any signal in hdf5 format.
 
 **Citation**
-This is the original implementation of the work [STQS: Interpretable multi-modal Spatial-Temporal-seQuential model for automatic Sleep scoring](https://www.sciencedirect.com/science/article/pii/S0933365721000312).
+This is the original implementation of the work: [STQS: Interpretable multi-modal Spatial-Temporal-seQuential model for automatic Sleep scoring](https://www.sciencedirect.com/science/article/pii/S0933365721000312).
 ```
 @article{pathak2021stqs,
   title={STQS: Interpretable multi-modal Spatial-Temporal-seQuential model for automatic Sleep scoring},
